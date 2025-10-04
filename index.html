@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Dons Espirituais Online</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            overscroll-behavior: none;
+        }
+        .answer-option.active {
+            background-color: #EBF8FF; /* light blue */
+            border-color: #0A587F;
+        }
+        .answer-option.active label {
+            font-weight: 600;
+            color: #0A587F;
+        }
+        #login-section, #main-section, #loading-section {
+            display: none; /* Escondido por padrão, controlado via JS */
+        }
+        button:disabled {
+            cursor: not-allowed;
+            background-color: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-blue-50 text-gray-800">
+
+    <header class="bg-[#0A587F] text-white shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold text-center flex-grow"><a href="#" onclick="event.preventDefault(); window.location.reload();">Teste de Dons Espirituais</a></h1>
+            <div id="user-info" class="text-sm text-right w-24"></div>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+        <!-- Tela de Carregamento -->
+        <div id="loading-section" class="text-center py-10">
+            <p class="text-lg text-gray-600">A ligar...</p>
+        </div>
+
+        <!-- Tela de Login/Cadastro -->
+        <div id="login-section" class="bg-white rounded-xl shadow-lg p-6 md:p-8 max-w-xl mx-auto">
+            <h2 class="text-2xl font-bold text-center text-[#0A587F] mb-2">Bem-vindo!</h2>
+            <p class="text-center text-gray-600 mb-6">Por favor, preencha os seus dados para iniciar.</p>
+            <form id="login-form" class="space-y-4">
+                <div>
+                    <label for="nome" class="block text-sm font-medium text-gray-700">Nome Completo</label>
+                    <input type="text" id="nome" name="nome" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#0A587F] focus:border-[#0A587F]">
+                </div>
+                <div>
+                    <label for="igreja" class="block text-sm font-medium text-gray-700">Igreja</label>
+                    <input type="text" id="igreja" name="igreja" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#0A587F] focus:border-[#0A587F]">
+                </div>
+                <div>
+                    <label for="distrito" class="block text-sm font-medium text-gray-700">Distrito</label>
+                    <input type="text" id="distrito" name="distrito" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#0A587F] focus:border-[#0A587F]">
+                </div>
+                <div>
+                    <label for="funcao" class="block text-sm font-medium text-gray-700">Função de Liderança</label>
+                    <input type="text" id="funcao" name="funcao" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#0A587F] focus:border-[#0A587F]">
+                </div>
+                <button type="submit" id="login-submit-button" class="w-full bg-[#0A587F] hover:bg-[#084A6A] text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-lg" disabled>Aguarde...</button>
+                <div id="login-error" class="text-red-600 text-center mt-4 hidden"></div>
+            </form>
+        </div>
+
+        <!-- Conteúdo Principal do Teste -->
+        <div id="main-section">
+            <div id="dons-panel" class="bg-white rounded-xl shadow-lg p-6 md:p-8 max-w-4xl mx-auto">
+                <!-- O conteúdo do teste será carregado aqui pelo JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-center py-4 mt-4">
+        <p class="text-sm text-gray-600">Ao utilizar este website você concorda com os <a href="#termos" class="text-[#0A587F] hover:underline">termos de uso.</a></p>
+        <p class="text-sm text-gray-500 mt-2">&copy; 2025 Associação Paulistana. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Modal Termos de Uso -->
+    <div id="termos" class="fixed inset-0 bg-black bg-opacity-50 hidden target:flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-2xl max-w-2xl w-full max-h-[90vh] relative">
+             <a href="#" title="Fechar" class="absolute top-2 right-4 text-3xl font-bold text-red-500 hover:text-red-700">&times;</a>
+            <div class="p-6 overflow-y-auto h-full">
+                <h2 class="text-2xl font-bold mb-4">Termos de Uso</h2>
+                <div class="space-y-4 text-gray-700">
+                     <p>Não utilizamos nenhuma informação pessoal dos usuários. As respostas do Teste de Dons Espirituais Online são armazenadas no seu navegador e, se você preencher o perfil, seus dados e resultados são salvos de forma segura em nosso banco de dados para seu uso futuro.</p>
+                     <h3 class="font-bold text-lg">O que são cookies?</h3>
+                     <p>Cookies são arquivos criados pelos sites que você visita. Eles tornam sua experiência on-line mais fácil, economizando informações de navegação.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SDKs do Firebase v11 (Modular) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, addDoc, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // --- CONFIGURAÇÃO DO FIREBASE ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyA44KP5PC3mvTiAqL7fjdDfnGXh4WmTWjU",
+            authDomain: "teste-donse-spirituais.firebaseapp.com",
+            projectId: "teste-donse-spirituais",
+            storageBucket: "teste-donse-spirituais.appspot.com",
+            messagingSenderId: "194257938577",
+            appId: "1:194257938577:web:086cdd02e94d9a08327730"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentUser = null;
+        let userData = null;
+
+        // --- LÓGICA DE AUTENTICAÇÃO E CONTROLE DE TELA ---
+        document.getElementById('loading-section').style.display = 'block';
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUser = user;
+                console.log("Usuário autenticado com UID:", currentUser.uid);
+                try {
+                    const userRef = doc(db, 'users', currentUser.uid);
+                    const docSnap = await getDoc(userRef);
+                    if (docSnap.exists()) {
+                        userData = docSnap.data();
+                        showMainContent();
+                    } else {
+                        showLogin();
+                    }
+                } catch (error) {
+                    console.error("Erro ao verificar o perfil do utilizador:", error);
+                    showLogin();
+                    const errorDiv = document.getElementById('login-error');
+                    if(error.code === 'permission-denied') {
+                        errorDiv.innerText = 'Erro de permissão. Verifique as regras de segurança do Firestore na sua consola Firebase.';
+                    } else {
+                        errorDiv.innerText = 'Ocorreu um erro ao carregar o seu perfil.';
+                    }
+                    errorDiv.classList.remove('hidden');
+                }
+            }
+        });
+
+        const performSignIn = async () => {
+            try {
+                 await signInAnonymously(auth);
+            } catch (error) {
+                console.error("Erro na autenticação:", error);
+                const loadingDiv = document.getElementById('loading-section');
+                loadingDiv.innerHTML = `<p class="text-red-600">Falha na autenticação. Verifique as configurações do Firebase e a sua ligação.</p>`;
+            }
+        };
+        performSignIn();
+
+
+        function showLogin() {
+            document.getElementById('loading-section').style.display = 'none';
+            document.getElementById('login-section').style.display = 'block';
+            document.getElementById('main-section').style.display = 'none';
+            const submitBtn = document.getElementById('login-submit-button');
+            submitBtn.disabled = false;
+            submitBtn.innerText = 'Salvar e Iniciar Teste';
+        }
+
+        function showMainContent() {
+            document.getElementById('loading-section').style.display = 'none';
+            document.getElementById('login-section').style.display = 'none';
+            document.getElementById('main-section').style.display = 'block';
+            if(userData) {
+                 document.getElementById('user-info').innerText = `Olá, ${userData.nome.split(' ')[0]}`;
+            }
+            dons_init();
+        }
+
+        // --- LÓGICA DO FORMULÁRIO DE LOGIN ---
+        const loginForm = document.getElementById('login-form');
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const submitBtn = document.getElementById('login-submit-button');
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'Salvando...';
+
+            const nome = document.getElementById('nome').value;
+            const igreja = document.getElementById('igreja').value;
+            const distrito = document.getElementById('distrito').value;
+            const funcao = document.getElementById('funcao').value;
+
+            const userProfile = {
+                nome,
+                igreja,
+                distrito,
+                funcao,
+                createdAt: serverTimestamp()
+            };
+
+            setDoc(doc(db, 'users', currentUser.uid), userProfile)
+                .then(() => {
+                    userData = userProfile;
+                    showMainContent();
+                })
+                .catch(error => {
+                    console.error("Erro ao salvar perfil: ", error);
+                    const errorDiv = document.getElementById('login-error');
+                    errorDiv.innerText = 'Ocorreu um erro ao guardar o seu perfil. Verifique as suas permissões ou tente novamente.';
+                    errorDiv.classList.remove('hidden');
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = 'Salvar e Iniciar Teste';
+                });
+        });
+
+        loginForm.addEventListener('input', () => {
+             document.getElementById('login-error').classList.add('hidden');
+        });
+
+
+        // --- DADOS DO TESTE (PERGUNTAS, INFORMAÇÕES, TEXTOS) ---
+        var dons = {"Liberalidade":["Sempre tento ajudar pessoas em dificuldades, mesmo que minhas próprias necessidades sejam muitas.","Sou fiel e generoso nos dízimos e ofertas, pois conheço a generosidade de Deus. Sinto prazer em doar.","Os membros da minha congregação sabem que tenho prazer em ajudar aqueles que têm necessidades materiais e financeiras, que gosto de financiar projetos da igreja, mesmo que eu tenha pouco dinheiro.","Poucas coisas me trazem tanta alegria quanto dar parte do que tenho para pessoas que necessitam ou para a igreja e o avanço do evangelho."],"Profecia":["Tenho sonhos e visões contendo mensagens em plena concordância com a Bíblia.","Quando falo em público, os ouvintes me consideram mais do que um professor ou do que um orador ou pregador. A igreja reconhece o dom de profecia em mim.","Recebo mensagens específicas de Deus com conteúdo para a igreja como um todo, bem como para indivíduos, conforme Deus me mostra. Estas mensagens nunca contradizem material já revelado por Deus.","Nunca pedi para ter o dom de profecia. Cumpro com o meu dever em humildade. Sirvo à igreja se ela quiser."],"Liderança":["Gosto de liderar e servir. Se a igreja precisa de alguém para dirigir atividades, motivar pessoas, me encontro entre os primeiros com quem se pode contar.","Quando tenho idéias que creio serem vindas de Deus, aconselho-me com irmãos, avalio as conseqüências, tomo a decisão e creio na decisão tomada como se fosse de Deus, mesmo que ela seja impopular.","Tem havido espírito de unidade, entusiasmo e progresso do reino de Deus quando ocupo um cargo de liderança. Gosto de liderar servindo e coordenando outros.","Sei que as críticas fazem parte da liderança e tenho aprendido com elas em humildade. Tenho me esforçado pelo melhor e procuro entender e ser sensível às idéias de outros."],"Hospitalidade":["Sinto satisfação em ajudar as pessoas, proporcionando-lhes moradia e alimento.","Se alguém confiável (talvez um conhecido) bater a minha porta, precisando de lugar para pernoitar, convido-o para entrar, ainda que para acomodá-lo fosse necessário ceder minha cama e eu dormir no chão.","Quando eu tenho um hóspede me dedico a seu bem estar e a sua salvação de todo coração.","Gosto de convidar pessoas e dar o que tenho de melhor em minha casa, comida, pouso ou o que for necessário."],"Línguas":["Tenho facilidades para aprender línguas de outros países e povos.","Entendo o sentido do que as pessoas estão falando, mesmo que eu não saiba falar a sua língua.","Interesso-me muito por outras línguas e não me custa memorizar palavras.","Gosto de estar no meio de pessoas de outros países; quando tenho que me comunicar com eles, faço o melhor que consigo, mesmo sem saber a língua."],"Missionário":["Sinto grande responsabilidade em levar o Evangelho a pessoas não alcançadas.","Fico inquieto quando vejo quantas pessoas ainda não conhecem Jesus e vivo com idéias para alcançar pessoas ao meu redor. Gosto de dar estudos bíblicos para descrentes, creio que a Palavra transforma suas vidas.","Gosto de estar com pessoas e aceito o jeito diferente de cada um ser. Procuro entendê-las para ajudá-las melhor. Nunca julgo ou condeno alguém, mesmo pelo pior pecado. Busco instruir com paciência e persistência.","Consigo aceitar e amar descrentes como estão e com facilidade ajudá-los a conhecer Jesus."],"Evangelismo":["Tenho facilidade em persuadir alguém a tomar uma decisão ao lado de Cristo.","Facilmente sei transformar uma conversa normal numa conversa espiritual conduzindo a pessoa a Cristo.","Se eu tenho um tempo extra, meu primeiro pensamento é dedicar-me ao trabalho do Evangelho. Sinto desejo de compartilhar aquilo que me fez tão bem: Jesus!","Regularmente levo pessoas a Cristo, acompanhando-as ao batismo e confirmando-as na fé e na doutrina bíblica."],"Ensino":["Gosto de ensinar e muitos me procuram para estudar a Bíblia comigo, pois entendem bem quando eu explico.","Consigo explicar diversos temas de tal maneira que as pessoas incorporam os ensinos em suas vidas.","Quando ensino, percebo que as pessoas ficam envolvidas por inteiro, elas não entendem apenas com a cabeça, mas com o coração, aplicando o tema às suas vidas.","Empolgo-me em ler livros e me desenvolver em didática e psicologia do ensino."],"Cura":["Gosto de estudar o corpo humano, conheço os órgãos e funções e fico me aperfeiçoando na compreensão do corpo.","Deus quer que tenhamos saúde, pois um intelecto vigoroso e uma vida espiritual abundante apenas ocorrem num corpo saudável. Conheço a lógica de nosso corpo e recomendo a prevenção da saúde.","Muitas vezes quando oro pela saúde de alguém, ela melhora. Creio na cura por vias naturais e sobrenaturais.","Conheço tratamentos simples, sem contra-indicação para muitas doenças e males."],"Pastoral":["Gosto de visitar os membros da Igreja regularmente, em suas casas, participando de suas vidas e fases.","Gosto de dar estudos bíblicos para ajudar os membros da igreja a crescer em sua fé.","Gosto de elaborar sermões, de pregá-los e observar o efeito na vida das pessoas.","Eu gosto de aconselhar pessoas nas diferentes fases de suas vidas. Elas também apreciam e tiram proveito para sua experiência espiritual e de vida."],"Administração":["Diante de problemas complexos sou capaz de identificar os fatores que os influenciam, achando soluções práticas.","Tenho facilidade para descobrir recursos e pessoas para realizar certa atividade.","Eu resolvo os problemas de pessoas e da igreja de tal forma que elas se sintam satisfeitas e a igreja encontre caminhos para funcionar melhor.","Gosto de administrar as coisas da igreja: prédios, finanças, pessoas. Penso que quando eu me envolvo nesta área a igreja fica mais organizada e um lugar melhor para adorar. Os membros vêem esta qualidade em mim."],"Discernimento":["Eu posso facilmente dizer se um profeta fala inspirado pelo Espírito Santo ou não.","Sei quando uma pessoa está sofrendo, mesmo que esteja sorrindo.","Posso dizer se determinadas decisões estão ou não de acordo com os princípios bíblicos.","Muitas vezes posso discernir os motivos das pessoas para ajudá-las, sem julgá-las por isso."],"Apostolado":["Tenho sido chamado por Deus para iniciar trabalhos para Jesus onde outros hesitariam em ir.","Sou facilmente impressionável pelo Espírito Santo e sigo as Suas instruções sem temer distância, dificuldade, obstáculos e desvantagens pessoais. Quando Ele chama não temo o que terei que sacrificar.","Já fundei ou tenho muita vontade de fundar uma congregação em um lugar onde antes nada existia.","Sinto-me desassossegado quando fico muito tempo em um mesmo lugar."],"Exortação":["Quando alguém está sofrendo, sou capaz de identificar o que necessita e lhe dizer algo que o ajudará.","Posso ajudar a um causador de problemas a voltar a cooperar com o grupo sob minha liderança.","Freqüentemente tenho sido solicitado para ajudar aqueles que estão em problemas para resolvê-los.","Acho fácil aplicar os princípios bíblicos aos problemas das pessoas de tal forma que possa ajudá-las."],"Fé":["Tenho coragem de ousar coisas grandes para Deus, de andar numa direção desconhecida e iniciar projetos, pois eu conheço a direção de Deus e confio que Ele está me guiando.","Sei que ao confiar em Deus Ele me guiará inclusive através de problemas. Tenho convicção de que inclusive as perdas e lutas vão colaborar para o meu bem.","Aceito as promessas de Deus como válidas e creio nelas, ainda que o seu cumprimento pareça impossível.","Deus responde minhas orações, principalmente quando eu avanço pela fé com confiança inabalável nEle."],"Socorro e Misericórdia":["Eu gosto de ajudar rejeitados da sociedade, por exemplo: bêbados, viciados em drogas e outros.","Quando me pedem ajuda, mesmo ocupado, tento ajudar. Sinto que Deus espera de mim e gosto de ajudar.","Sou extremamente sensível às necessidades dos menos favorecidos, sinto satisfação em falar com eles, oferecendo-lhes minha ajuda. Sou cuidadoso para ajudar com sabedoria.","Os membros da igreja sabem que sinto prazer em visitar os doentes e necessitados, ajudando-os."],"Conhecimento":["Conheço a Bíblia e outros escritos proféticos em seu contexto histórico e cultural.","Memorizo textos bíblicos e textos relacionados facilmente e entendo o raciocínio dos autores inspirados.","A igreja me conhece pelo meu conhecimento bíblico e me consulta se necessário.","Conheço a história bíblica em seus detalhes e creio na ação de Deus em cada momento desta história. Conheço o plano profético e fico maravilhado com o plano da salvação em Jesus."],"Sabedoria":["Quando enfrento os dilemas da vida consigo encontrar soluções práticas que ajudam sem complicar as coisas.","Quando aconselho pessoas em conflito ajudo-as a tirar o foco do problema e ganhar foco na solução.","Quando pessoas me procuram, penso nas diferentes opções que elas têm, mas deixo elas decidirem.","Princípios Bíblicos me vêm rápido á mente quando me deparo com problemas."],"Intercessão":["Gasto muito do meu tempo de oração intercedendo pelas necessidades de outros diante de Deus.","Freqüentemente, quando pessoas têm problemas, pedem para eu orar por elas.","Nomes, regularmente, vêm à minha mente quando estou em oração, aos quais dedico a Deus.","Minhas orações pelos outros, muitas vezes são respondidas e a igreja sabe disto e me procuram para orar."]}
+        var dons_info = {'Liberalidade':'O dom do Espírito para dar liberalmente, com alegria, e com regularidade às necessidades da Igreja e de indivíduos. Todos são chamados a dar, para mais.','Sabedoria':'Dom que habilita para o entendimento de pessoas e/ou a igreja em partes e como um todo em sua complexidade, trazendo solução para problemas, libertação, harmonia, progresso e crescimento.','Conhecimento':'O dom concedido pelo Espírito capacitando o crente a reter conhecimento. Geralmente está (ou deveria estar) associado ao dom de ensino.','Ensino':'O dom para conceder instrução espiritual às pessoas (membros de igreja ou não) de modo que o evangelho seja compreendido e seguido, promovendo crescimento espiritual e unidade na fé.','Pastoral':'O dom do Espírito para ministrar, tanto direta como indiretamente, a todas as necessidades de cada membro da congregação e a pessoas que necessitem ser pastoreadas. Está ligado com o dom de exortação, da palavra, da sabedoria, da misericórdia e da liderança (entre outros).','Línguas':'Capacitação especial e sobrenatural para comunicar verbalmente o Evangelho em um idioma estrangeiro, até mesmo sem treinamento, quando há uma extrema necessidade de fazê-lo de maneira rápida e eficiente, a fim de fazer avançar a obra do evangelho e testemunhar da obra expiatória de Jesus às pessoas de diversas etnias.','Hospitalidade':'O dom do Espírito para acolher o abandonado e necessitado, fazendo com que cada pessoa sinta-se querida e confortável. Habilidade de amar e servir desinteressadamente.','Exortação':'O dom do Espírito que traz conforto, encorajamento e instrução àqueles que precisam de alguma ajuda, cura interior e nos relacionamentos. Ouvir e aconselhar oportunamente é a marca deste dom.','Missionário':'É o dom para compartilhar o Evangelho de maneira eficaz noutro país, adaptando-se com espontaneidade e a diferentes culturas, climas e circunstâncias. Está associado ao dom de línguas.','Fé':'O dom do Espírito para reclamar as promessas de Deus com inabalável confiança de que serão cumpridas. Está baseado num profundo conhecimento de Deus e de seu modo de agir encontrado na Bíblia.','Discernimento':'É o dom de perceber o espírito que move as pessoas. Por “intuição” (Espírito Santo) percebe o estado espiritual de outros e ministra conforme a necessidade. Associado ao dom de exortação.','Cura':'É o dom de entender o funcionamento do corpo humano, discernir doenças, aplicar tratamentos e ajudar o doente a cuidar de seu corpo para que tenha saúde. Pode estar associado ao dom de milagres.','Administração':'O dom do Espírito que concebe e supervisiona planos para o trabalho de Deus, trazendo progresso à causa e condições (materiais e humanas) para que sejam administrados.','Liderança':'É o dom de envolver pessoas em uma visão, estabelecer objetivos, desenvolver estratégias para alcançá-los e vê-los realizados para a edificação da igreja; trazendo crescimento do reino de Deus.','Evangelismo':'O dom do Espírito para compartilhar o Evangelho e ver os descrentes se encontrarem com Jesus, unindo-se à igreja como membros responsáveis.','Socorro e Misericórdia':'O dom do Espírito para se ter sensibilidade aos sentimentos e necessidades dos outros, dando-lhes auxilio que traz conforto e cura.','Intercessão':'Pessoas são chamadas para se importar e interceder em oração por outras, por atividades internas e externas à igreja. É o dom de apoio ao evangelismo e ao pastorado.','Apostolado':'O dom do Espírito Santo para pioneiro, líder, que inicia igrejas ou as desenvolve, indo para lugares onde outros não iriam. <em lang="gr">Apostello</em> quer dizer: “enviado para pregar”. Paulo é o exemplo típico.','Profecia':'É o dom através do qual o Espírito transmite conselhos e instruções para a igreja por meio de visões e sonhos. Deus manifesta a Sua vontade através deste dom (Amós 3:7) para um grupo menor ou para a igreja como um todo. A inspiração profética pode ser usada por Deus como e quando Lhe apraz.'}
+        var dons_strs = {'start_text':'<blockquote class="cite-intro text-center text-gray-600 italic mb-6"><em>Qual é o meu <strong>chamado ministerial,</strong> o meu <strong>dom espiritual?</strong></em></blockquote><h2 class="text-2xl font-bold mb-4 text-[#0A587F]">Instruções</h2> <ul class="list-disc list-inside space-y-2 mb-6"> <li>Responda com <strong>calma,</strong> com <strong>paciência,</strong> em espírito de <strong>oração.</strong> (São 76 questões, vai levar um tempinho mesmo...)</li> <li><strong>Seja sincero.</strong> Não responda <em>“como deveria ser”;</em> responda <em>“como é”.</em> Não existe resposta errada.</li> <li>Há diferentes maneiras para descobrir dons. Um teste auxilia, a opinião de irmãos e irmãs mais maduros na fé ajuda, mas é <strong>no exercício dos dons,</strong> ao se lançar pela fé ao serviço do Senhor, que vêm a convicção e o chamado.</li> <li><strong>Não tenha medo</strong> de cometer erros no uso dos dons: comece a usá-los, e esteja atento ao Espírito Santo!</li> <li>Existem inúmeros <strong>outros dons espirituais,</strong> diferentes dos relacionados aqui. Esta lista não é exaustiva. A criatividade de Deus não tem limites.</li> </ul>','start_button':'Começar o teste!','restart_button':'Retomar o teste','showresults_button':'Mostrar último resultado','cleanresults_button':'Limpar dados armazenados','cleardata_confirm':'Tem certeza de que deseja descartar todas as respostas que você já deu?\n\n(Esta operação NÃO PODE SER DESFEITA!)','start_comments':'','of_tip':'de','answers':['não<br>nunca<br>discordo totalmente','pouco<br>raramente<br>discordo um pouco','muito<br>com frequência<br>concordo','sim<br>sempre<br>concordo totalmente'],'prev_question_link_text':'Anterior','next_question_link_text':'Próxima','finish_test_link_text':'Ver Resultado','no_answer_alert':'É preciso escolher uma resposta para continuar.','calc_error_alert':'Ocorreu um erro ao calcular o resultado! Aparentemente, uma ou mais questões não foram respondidas. Vamos tentar retomar o teste...','result_title':'Resultado do Teste de Dons','result_gift_header':'Dom Espiritual','result_proportion_header':'Proporção','result_comment':'<div class="bg-blue-50 border-l-4 border-[#0A587F] text-blue-900 p-4 mb-6 rounded-r-lg" role="alert"><p class="font-bold">Observação Importante</p><p>Os três primeiros dons tendem a ser os seus principais. Disponha-se a ajudar em diferentes frentes de trabalho dentro e fora da igreja. Ao trabalhar, você perceberá uma satisfação enorme e uma convicção que vêm do exercício de seus dons.</p></div>'}
+
+        var dons_answers = {};
+        
+        window.dons_init = function() {
+            var local_answers = localStorage.getItem('dons_answers');
+            if (local_answers) {
+                try {
+                    dons_answers = JSON.parse(local_answers);
+                } catch(e) {
+                    dons_answers = {};
+                }
+            }
+            
+            var n_answers = Object.keys(dons_answers).length;
+            var n_questoes = dons_n_questoes();
+            
+            var dons_intro = '<div class="text-center">' + dons_strs['start_text'] + '<div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8">';
+            dons_intro += '<button class="btn-start bg-[#0A587F] hover:bg-[#084A6A] text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-lg w-full sm:w-auto" tabindex="1">' + dons_strs['start_button'] + '</button>';
+            
+            var _class_results_restart = 'restart';
+            if (n_answers > 0) {
+                if (n_answers < n_questoes) {
+                    dons_intro += ' <button class="btn-restart bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-lg w-full sm:w-auto" tabindex="2">' + dons_strs['restart_button'] + '</button> ';
+                } else {
+                    _class_results_restart = 'results';
+                    dons_intro += ' <button class="btn-results bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-lg w-full sm:w-auto" tabindex="2">' + dons_strs['showresults_button'] + '</button> ';
+                }
+                dons_intro += ' <button class="btn-clear bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-lg w-full sm:w-auto" tabindex="3">' + dons_strs['cleanresults_button'] + '</button> ';
+            }
+            dons_intro += '</div></div>' + dons_strs['start_comments'];
+            
+            document.getElementById('dons-panel').innerHTML = dons_intro;
+            
+            document.querySelector('.btn-start').addEventListener('click', dons_start);
+            
+            var _dons_restart_btn = document.querySelector('.btn-' + _class_results_restart);
+            if (_dons_restart_btn) _dons_restart_btn.addEventListener('click', dons_start);
+            
+            var _dons_clear_btn = document.querySelector('.btn-clear');
+            if (_dons_clear_btn) _dons_clear_btn.addEventListener('click', dons_clear);
+        }
+
+        window.dons_clear = function() {
+            dons_answers = {};
+            localStorage.removeItem('dons_answers');
+            dons_init();
+        }
+
+        window.dons_start = function(event) {
+            var target = event.currentTarget;
+            if (target.classList.contains('btn-results')) {
+                dons_calc_result();
+            } else {
+                var n_answers = 0;
+                if (target.classList.contains('btn-restart')) {
+                    n_answers = Object.keys(dons_answers).length;
+                }
+                dons_show_question(n_answers);
+            }
+        }
+        
+        window.dons_show_question = function(q) {
+            var n_dons = 0;
+            var dons_keys = [];
+            var n_questoes = 0;
+            for (var i in dons) {
+                dons_keys[n_dons] = i;
+                n_dons++;
+                n_questoes += dons[i].length;
+            }
+
+            if (q < n_questoes) {
+                var n_dom = q % n_dons;
+                var o_dom = dons_keys[n_dom];
+                var a_questao = Math.floor(q / n_dons);
+
+                var markup_questao = '<div class="text-center mb-6"><p class="text-xl md:text-2xl text-gray-700 leading-relaxed"><span class="bg-[#0A587F] text-white text-base font-bold mr-3 px-3 py-1 rounded-full">' + (q + 1) + '</span> ' + dons[o_dom][a_questao] + '</p></div>';
+
+                var markup_answer = '<form id="dons-answers-form" class="space-y-3">';
+                markup_answer += '<input type="hidden" name="q" value="' + q + '">';
+                
+                var answered = (typeof(dons_answers['question' + q]) != 'undefined') ? dons_answers['question' + q] : -1;
+                
+                var grid_cols = (dons_strs['answers'].length === 4) ? 'grid-cols-2 md:grid-cols-4' : `grid-cols-1 sm:grid-cols-${dons_strs['answers'].length}`;
+
+                markup_answer += `<div class="grid ${grid_cols} gap-4">`;
+
+                for (var i = 0; i < dons_strs['answers'].length; i++) {
+                     markup_answer += `
+                        <div class="answer-option border-2 rounded-lg transition-all ${(i == answered ? 'active' : '')}">
+                            <input type="radio" name="question${q}" value="${i}" id="question${q}answer${i}" class="sr-only" ${(i == answered ? 'checked' : '')}>
+                            <label for="question${q}answer${i}" tabindex="${i + 1}" class="block cursor-pointer p-4 text-center text-sm md:text-base">
+                                ${dons_strs['answers'][i]}
+                            </label>
+                        </div>`;
+                }
+                markup_answer += '</div>';
+
+                markup_answer += '<div class="flex justify-between items-center pt-6">';
+                markup_answer += '<div>' + (q > 0 ? '<a href="#" onclick="dons_submit_answer(-1); return false;" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-6 rounded-lg transition-colors" tabindex="6">' + dons_strs['prev_question_link_text'] + '</a>' : '&nbsp;') + '</div>';
+                markup_answer += '<div>' + (q < n_questoes - 1 ? '<a href="#" onclick="dons_submit_answer(1); return false;" class="bg-[#0A587F] hover:bg-[#084A6A] text-white font-bold py-2 px-6 rounded-lg transition-colors" tabindex="5">' + dons_strs['next_question_link_text'] + '</a>' : '<a href="#" onclick="dons_submit_answer(1); return false;" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded-lg transition-colors" tabindex="5">' + dons_strs['finish_test_link_text'] + '</a>') + '</div>';
+                markup_answer += '</div>';
+                markup_answer += '</form>';
+
+                var progress_percent = ((q + 1) * 100 / n_questoes);
+                var markup_progress = '<div class="w-full bg-gray-200 rounded-full h-2.5 mt-8" title="' + (q + 1) + ' ' + dons_strs['of_tip'] + ' ' + n_questoes + '"><div class="bg-[#0A587F] h-2.5 rounded-full" style="width: ' + progress_percent + '%"></div></div>';
+                
+                document.getElementById('dons-panel').innerHTML = markup_questao + markup_answer + markup_progress;
+                
+                document.querySelectorAll('.answer-option input[type="radio"]').forEach(radio => {
+                    radio.addEventListener('change', () => {
+                        document.querySelectorAll('.answer-option').forEach(opt => opt.classList.remove('active'));
+                        if(radio.checked) {
+                            radio.parentElement.classList.add('active');
+                        }
+                    });
+                });
+            }
+        }
+
+        window.dons_submit_answer = function(direction) {
+            var a_form = document.getElementById('dons-answers-form');
+            var n_questao = parseInt(a_form.querySelector('input[name="q"]').value, 10);
+            var a_answer = a_form.querySelector('input[type="radio"]:checked');
+            
+            if (!a_answer && direction === 1) {
+                return false;
+            }
+            
+            var n_questoes = dons_n_questoes();
+            if (a_answer) {
+                dons_answers['question' + n_questao] = a_answer.value;
+            }
+            
+            localStorage.setItem('dons_answers', JSON.stringify(dons_answers));
+            
+            if (n_questao + direction >= n_questoes) {
+                dons_calc_result();
+            } else {
+                dons_show_question(n_questao + direction);
+            }
+            return false;
+        }
+
+        window.dons_calc_result = function() {
+            var n_dons = 0;
+            var dons_keys = [];
+            var total_dons = {};
+            for (var i in dons) {
+                dons_keys[n_dons] = i;
+                total_dons[i] = 0;
+                n_dons++;
+            }
+            
+            var n_questoes = dons_n_questoes();
+            for (var i = 0; i < n_questoes; i++) {
+                var answered = dons_answers['question' + i];
+                if (typeof(answered) == 'undefined') {
+                    dons_show_question(i);
+                    return;
+                }
+                var o_dom = dons_keys[i % n_dons];
+                total_dons[o_dom] += parseInt(answered, 10);
+            }
+
+            var dons_totals = [];
+            for (var dom in dons) {
+                dons_totals.push({
+                    name: dom,
+                    score: total_dons[dom]
+                });
+            }
+
+            dons_totals.sort((a, b) => b.score - a.score);
+            
+            if(currentUser) {
+                const resultsCollection = collection(db, 'users', currentUser.uid, 'results');
+                addDoc(resultsCollection, {
+                    completedAt: serverTimestamp(),
+                    scores: dons_totals
+                }).catch(err => {
+                    console.error("Erro ao salvar resultado: ", err);
+                    const resultPanel = document.getElementById('dons-panel');
+                    const errorToast = document.createElement('div');
+                    errorToast.className = 'fixed bottom-5 right-5 bg-red-500 text-white py-2 px-4 rounded-lg shadow-lg';
+                    errorToast.innerText = 'Não foi possível guardar o resultado.';
+                    resultPanel.appendChild(errorToast);
+                    setTimeout(() => errorToast.remove(), 4000);
+                });
+            }
+
+
+            var res_markup = '<h2 class="text-3xl font-bold mb-6 text-center text-[#084A6A]">' + dons_strs['result_title'] + '</h2>' + dons_strs['result_comment'];
+            res_markup += '<div class="overflow-x-auto"><table class="w-full text-left border-collapse">';
+            res_markup += '<thead><tr class="bg-gray-100"><th class="p-3 font-bold uppercase text-gray-600 border border-gray-300 text-center w-16">#</th><th class="p-3 font-bold uppercase text-gray-600 border border-gray-300">' + dons_strs['result_gift_header'] + '</th><th class="p-3 font-bold uppercase text-gray-600 border border-gray-300">' + dons_strs['result_proportion_header'] + '</th></tr></thead>';
+            res_markup += '<tbody>';
+            
+            var higher_total = dons_totals.length > 0 ? dons_totals[0].score : 0;
+            
+            dons_totals.forEach((item, index) => {
+                let proportion = higher_total > 0 ? (item.score * 100 / higher_total) : 0;
+                let isTop3 = index < 3;
+                let barColor = 'bg-[#0A587F]';
+                if (proportion < 60) barColor = 'bg-yellow-500';
+                if (proportion < 30) barColor = 'bg-red-500';
+
+                res_markup += `<tr class="hover:bg-gray-50 ${isTop3 ? 'bg-blue-50' : ''}">`;
+                res_markup += '<td class="p-3 border border-gray-200 text-center font-bold text-gray-700">' + (index + 1) + '°</td>';
+                res_markup += '<td class="p-3 border border-gray-200"><details><summary class="font-semibold cursor-pointer ' + (isTop3 ? 'text-xl text-[#0A587F]' : 'text-lg') + '">' + item.name + '</summary><p class="mt-2 text-gray-600 text-sm">' + dons_info[item.name] + '</p></details></td>';
+                res_markup += '<td class="p-3 border border-gray-200 align-middle"><div class="w-full bg-gray-200 rounded-full h-4"><div class="' + barColor + ' h-4 rounded-full text-xs font-medium text-blue-100 text-center p-0.5 leading-none" style="width: ' + proportion + '%">' + Math.round(proportion) + '%</div></div></td>';
+                res_markup += '</tr>';
+            });
+            
+            res_markup += '</tbody></table></div>';
+            
+            document.getElementById('dons-panel').innerHTML = res_markup;
+        }
+
+        window.dons_n_questoes = function() {
+            let n_questoes = 0;
+            for (let i in dons) n_questoes += dons[i].length;
+            return n_questoes;
+        }
+    </script>
+</body>
+</html>
+
