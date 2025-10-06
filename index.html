@@ -408,6 +408,8 @@
 
             dons_totals.sort((a, b) => b.score - a.score);
             
+            // REMOVEMOS A CHAMADA DIRETA AO ZAPIER DAQUI
+            // A CLOUD FUNCTION CUIDARÁ DISSO AUTOMATICAMENTE
             if(currentUser) {
                 const resultsCollection = collection(db, 'users', currentUser.uid, 'results');
                 addDoc(resultsCollection, {
@@ -415,32 +417,10 @@
                     scores: dons_totals
                 })
                 .then(() => {
-                    // ENVIAR OS DADOS AO ZAPIER!
-                    if (userData) {
-                        fetch('https://hooks.zapier.com/hooks/catch/5390069/u9wy3t5/', {
-                            method: 'POST',
-                            body: JSON.stringify({
-                                createdAt: userData.createdAt,
-                                funcao: userData.funcao,
-                                igreja: userData.igreja,
-                                distrito: userData.distrito,
-                                nome: userData.nome,
-                                resultado: dons_totals
-                            }),
-                            headers: { 'Content-Type': 'application/json' }
-                        })
-                        .then(() => console.log('Dados enviados ao Zapier!'))
-                        .catch(err => console.error('Erro ao enviar para Zapier:', err));
-                    }
+                    console.log('Resultado salvo com sucesso no Firestore!');
                 })
                 .catch(err => {
                     console.error("Erro ao salvar resultado: ", err);
-                    const resultPanel = document.getElementById('dons-panel');
-                    const errorToast = document.createElement('div');
-                    errorToast.className = 'fixed bottom-5 right-5 bg-red-500 text-white py-2 px-4 rounded-lg shadow-lg';
-                    errorToast.innerText = 'Não foi possível guardar o resultado.';
-                    resultPanel.appendChild(errorToast);
-                    setTimeout(() => errorToast.remove(), 4000);
                 });
             }
 
